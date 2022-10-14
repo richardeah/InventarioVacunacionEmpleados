@@ -1,0 +1,93 @@
+-- public.rhtemployee definition
+
+-- Drop table
+
+-- DROP TABLE public.rhtemployee;
+
+CREATE TABLE public.rhtemployee (
+	employee_id numeric NOT NULL,
+	first_name varchar NOT NULL,
+	last_name varchar NOT NULL,
+	document_number varchar NOT NULL,
+	email varchar NOT NULL,
+	address_home varchar NULL,
+	mobile_phone varchar NULL,
+	birth_date date NULL,
+	has_vaccine bool NULL,
+	vaccine_type varchar NULL,
+	vaccine_date date NULL,
+	vaccine_number numeric NULL,
+	status bool NOT NULL,
+	create_date timestamp NOT NULL,
+	create_user_id varchar NOT NULL,
+	modified_user_id varchar NULL,
+	modified_date timestamp null,
+	CONSTRAINT rhtperson_pk PRIMARY KEY (employee_id)
+);
+
+-- Permissions
+
+ALTER TABLE public.rhtemployee OWNER TO postgres;
+GRANT ALL ON TABLE public.rhtemployee TO postgres;
+
+
+-- public.rhtuser definition
+
+-- Drop table
+
+-- DROP TABLE public.rhtuser;
+
+CREATE TABLE public.rhtuser (
+	user_id numeric NOT NULL,
+	employee_id numeric NOT NULL,
+	user_name varchar NOT NULL,
+	"password" varchar NOT NULL,
+	status bool NOT NULL,
+	create_user_id varchar NOT NULL,
+	create_date timestamp NOT NULL,
+	modified_user_id varchar NULL,
+	modified_date timestamp null,
+	CONSTRAINT rhtuser_pk PRIMARY KEY (user_id),
+	CONSTRAINT rhtuser_employee_fk FOREIGN KEY (employee_id) REFERENCES public.rhtemployee(employee_id)
+);
+
+-- Permissions
+
+ALTER TABLE public.rhtuser OWNER TO postgres;
+GRANT ALL ON TABLE public.rhtuser TO postgres;
+
+
+-- public.rhsecemployee definition
+
+-- DROP SEQUENCE public.rhsecemployee;
+
+CREATE SEQUENCE public.rhsecemployee
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;
+
+-- Permissions
+
+ALTER SEQUENCE public.rhsecemployee OWNER TO postgres;
+GRANT ALL ON SEQUENCE public.rhsecemployee TO postgres;
+
+
+-- public.rhsecuser definition
+
+-- DROP SEQUENCE public.rhsecuser;
+
+CREATE SEQUENCE public.rhsecuser
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;
+
+-- Permissions
+
+ALTER SEQUENCE public.rhsecuser OWNER TO postgres;
+GRANT ALL ON SEQUENCE public.rhsecuser TO postgres;
